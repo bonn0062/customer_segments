@@ -12272,7 +12272,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-I attempted to predict the "Grocery" feature and got a prediction score of approximately -0.4365, suggesting (as stated above) that the model fails to fit the data. This suggests more than anything else that the current model fits the data poorly or fails to fit it at all. This information also suggests that the "Fresh" feature could be important or even necessary for predicting customer's spending habits. This is because it is difficult or impossible to predict how much a person will spend on "Fresh" based on their spending in other categories. "Fresh" appears to add extra (possibly key) information to our data set that can't be easily inferred by looking at the model exclusively through other features.</p>
+I attempted to predict the "Fresh" feature and got a prediction score of approximately -0.4365, suggesting (as stated above) that the model fails to fit the data. This suggests more than anything else that the current model fits the data poorly or fails to fit it at all. This information also suggests that the "Fresh" feature could be important or even necessary for predicting customer's spending habits. This is because it is difficult or impossible to predict how much a person will spend on "Fresh" based on their spending in other categories. "Fresh" appears to add extra (possibly key) information to our data set that can't be easily inferred by looking at the model exclusively through other features.</p>
 
 </div>
 </div>
@@ -13454,12 +13454,23 @@ Sum of PCA dimensions 1,2,3,4:  0.9310999999999999
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
 0.7068 variance in the data is explained in total by the first and second principal component, while 0.9311 variance is explained by the first four principal components. That includes an explained varience of .123 at Dimension 3, and only .101 in dimension 4. This suggests that PCA dimensions represent patterns of spending (rather than customer segments or actual customers) that can both follow and go against the direction of the feature weights.</p>
-<p>The first dimension, which makes up the majority at .443, represents an above average pattern of spending in the "Fresh" and "Frozen " categories with lower than average spending patterns in the other categories.</p>
-<p>Dimension 2 is interesting because it doesn't show above average spending in any category. Rather, dimension 2 (with the second highest explained varience at .264) displays heavy negative weights across all categories, with the "Fresh" and "Frozen" categories representing the lowest feature weights.</p>
-<p>In dimension 3 "Milk," "Grocery," "Frozen," and "Delicatessen" all represent higher than average spending patterns, while "Detergents_Paper" spending is lower than average and "Fresh" is much lower.</p>
-<p>In dimension 4, with an explained variance of 0.101, represents higher than average spending patterns in "Milk," "Grocery," and "Delicatessen." Here, "Delicatessen" displays the highest feature weights value of any value in any of the dimensions. "Frozen" and "Detergents_Paper" are both below average.</p>
-<p>Dimension 5 represents very high spending in "Milk" and above average spending in "Fresh," "Frozen," and "Grocery" with lower than average values in "Detergents_Paper" and "Delicatessen."</p>
-<p>In Dimension 6, the value for "Grocery" is at its lowest with slightly lower than average values in "Fresh" and "Frozen" as well. "Milk," "Detergents_Paper," and "Delicatessen" are all above average.</p>
+<p>The first dimension, which makes up the majority at .443, represents heavily positively-weighted features in the "Fresh" and "Frozen " categories with negatively-weighted features in the other categories.</p>
+<p>Dimension 2 (with the second highest explained varience at .264) is interesting because it doesn't show positively weighted features in any category. Rather, dimension 2  displays heavily negatively-weighted features across all categories, with the "Fresh," "Frozen," and "Delicatessen" categories representing the largest feature weights.</p>
+<p>In dimension 3 "Milk," "Grocery," "Frozen," and "Delicatessen" all represent high positively-weighted features, while "Detergents_Paper" spending has negatively-weighted features and "Fresh" is even more heavily negatively-weighted.</p>
+<p>Dimension 4, with an explained variance of 0.101, represents positively-weighted features in "Milk," "Grocery," and "Delicatessen." Here, "Delicatessen" displays the highest positive feature weights value of any value in any of the dimensions. "Frozen" and "Detergents_Paper" are both negatively-weighted.</p>
+<p>Dimension 5 represents very positively-weighted features in "Milk" and "Fresh," "Frozen," and "Grocery" with negatively-weighted features in "Detergents_Paper" and "Delicatessen."</p>
+<p>In Dimension 6, the value for "Grocery" is at its most negatively-weighted, with slightly lower than average values in "Fresh" and "Frozen" as well. "Milk," "Detergents_Paper," and "Delicatessen" are all positively-weighted.</p>
+<p>That being said, it is not only the customers who have positive dimension in a particular dimension who necessarily represent that dimension. The sign itself is arbitrary.</p>
+<p><strong>1 * 1 = 1</strong></p>
+<p><strong>-1 * -1 = 1</strong></p>
+<p>A positive or negative PC means that you are projecting onto an eigenvector that is projecting either in one direction or 180 degrees in the other direction. Either way, the information remains the same. A high or low absolute PCA dimension value could help to differentiate different types of customers. It is really a matter of the relative signs of the features that form the PCA dimensions that are important. If higher weights are assigned to categories like "Fresh" and/or "Frozen" (or "Detergents_Paper," "Grocery," and/or "Milk"), restaurants and cafes could potentially be consistently separated out from retail customers.</p>
+<p><strong>Resources</strong></p>
+<ul>
+<li><a href="https://newonlinecourses.science.psu.edu/stat505/node/54/">https://newonlinecourses.science.psu.edu/stat505/node/54/</a></li>
+<li><a href="http://setosa.io/ev/principal-component-analysis/">http://setosa.io/ev/principal-component-analysis/</a></li>
+<li><a href="https://stats.stackexchange.com/questions/88880/does-the-sign-of-scores-or-of-loadings-in-pca-or-fa-have-a-meaning-may-i-revers">https://stats.stackexchange.com/questions/88880/does-the-sign-of-scores-or-of-loadings-in-pca-or-fa-have-a-meaning-may-i-revers</a></li>
+<li><em>Additional information also included from Udacity review 02/24/2019</em></li>
+</ul>
 
 </div>
 </div>
@@ -14270,17 +14281,6 @@ True centers of the data vs. the mean of the data:
 Segment 0 represents higher spending in "Fresh" and "Frozen" than Segment 1, while Segment 1 represents much higher spending in "Milk," "Grocery," "Detergents_Paper," and "Delicatessen."</p>
 <p>In <strong>Segment 0</strong>, spending is below the mean in every category. It appears simply by looking at the information above that the customers assigned to segment 0 spend below the mean across the board, though then do spend proportionally higher amounts in the "Fresh" and "Frozen" categories. This could indicate that a customer assigned to this segment might be a smaller establishment that offer a lot of fresh and frozen foods, like a cafe or restaurant.</p>
 <p>In <strong>Segment 1</strong>, spending is far below the mean in the "Fresh" category and also below the mean in the "Frozen" and "Delicatessen" categories. Spending is above the mean in categories like "Grocery," Detergents_Paper, and "Milk." This might suggest that a customer who is assigned to Segment 1 might be a retail operation that offers a wider variety of items.</p>
-<p>That being said, it is not only the customers who have positive dimension in a particular dimension who necessarily represent that dimension. The sign itself is arbitrary.</p>
-<p><strong>1 * 1 = 1</strong></p>
-<p><strong>-1 * -1 = 1</strong></p>
-<p>A positive or negative PC means that you are projecting onto an eigenvector that is projecting either in one direction or 180 degrees in the other direction. Either way, the information remains the same. A high or low absolute PCA dimension value could help to differentiate different types of customers. It is really a matter of the relative signs of the features that form the PCA dimensions that are important. If higher weights are assigned to categories like "Fresh" and/or "Frozen" (or "Detergents_Paper," "Grocery," and/or "Milk"), restaurants and cafes could be consistently separated out from retail customers.</p>
-<p><strong>Resources</strong></p>
-<ul>
-<li><a href="https://newonlinecourses.science.psu.edu/stat505/node/54/">https://newonlinecourses.science.psu.edu/stat505/node/54/</a></li>
-<li><a href="http://setosa.io/ev/principal-component-analysis/">http://setosa.io/ev/principal-component-analysis/</a></li>
-<li><a href="https://stats.stackexchange.com/questions/88880/does-the-sign-of-scores-or-of-loadings-in-pca-or-fa-have-a-meaning-may-i-revers">https://stats.stackexchange.com/questions/88880/does-the-sign-of-scores-or-of-loadings-in-pca-or-fa-have-a-meaning-may-i-revers</a></li>
-<li><em>Additional information also included from Udacity review 02/24/2019</em></li>
-</ul>
 
 </div>
 </div>
